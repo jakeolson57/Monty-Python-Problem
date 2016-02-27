@@ -1,0 +1,74 @@
+#include <iostream>
+#include <cmath>
+#include <cstdib>
+
+using namespace std;
+
+double create_rand_number (int min, int max);
+double find_radians_x (int rand_num);
+double find_radians_y (int rand_num);
+
+int main() {
+  double dist, master_dist = 0.0, master_x_coordinate = 0.0, master_y_coordinate = 0.0, rand_num = 0.0, y_coordinate = 0.0, x_coordinate = 0.0;
+  int max = 628;
+  int min = 0;
+  for (int master_iteration = 0; master_iteration <= 1000; master_iteration++) {
+    for (int iteration = 0; iteration <= 1000; iteration++) {
+      rand_num = create_rand_number(min, max);
+      x_coordinate = find_radians_x (rand_num);
+      y_coordinate = find_radians_y (rand_num);
+
+      master_x_coordinate = master_x_coordinate + x_coordinate;
+      master_y_coordinate = master_y_coordinate + y_coordinate;
+    }
+
+    master_y_coordinate = master_y_coordinate * master_y_coordinate; //Perform pathogorean to find the distance
+    master_x_coordinate = master_x_coordinate * master_x_coordinate;
+
+    dist = master_x_coordinate + master_y_coordinate;
+
+    dist = sqrt(dist);
+
+    master_dist = master_dist + dist; // Add the distance to the master distance so that there can be another iteration. And later create an average.
+
+    master_x_coordinate = 0.0; // Resetting coordinates for the next iteration.
+    master_y_coordinate = 0.0;
+    dist = 0.0;
+  }
+
+  master_dist = master_dist / 10;
+  std::cout << master_distx << std::endl;
+
+  char dummy;
+  std::cout << "Enter any key to quit." << std::endl;
+  cin >> dummy;
+
+  return 0;
+
+}
+
+double create_rand_number (int min, int max) {
+  int z = rand() * 32768;
+  int max_min = max + 1;
+
+  return z % max_min;
+
+}
+
+double find_radians_x (int rand_num) {
+  double x;
+
+  x = rand_num / 100.0;
+  x = cos(x);
+
+  return x;
+}
+
+double find_radians_y (int rand_num) {
+  double x, y;
+
+  x = rand_num / 100.0;
+  y = sin(x);
+
+  return y;
+}
